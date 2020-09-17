@@ -12,12 +12,14 @@ import androidx.databinding.DataBindingUtil
 import com.example.udacity.aboutme.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
+    private val myName = MyName("Nori")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 //        setContentView(R.layout.activity_main)
+        binding.myName = myName
 
         binding.doneButton.setOnClickListener {
             setNickname(it)
@@ -29,7 +31,9 @@ class MainActivity : AppCompatActivity() {
     private fun setNickname(view: View) {
 
         with(binding) {
-            nicknameText.text = nicknameEdit.text
+            myName?.nickname = nicknameEdit.text.toString()
+            invalidateAll()
+//            nicknameText.text = nicknameEdit.text
             nicknameText.visibility = View.VISIBLE
             nicknameEdit.visibility = View.GONE
             doneButton.visibility = View.GONE
